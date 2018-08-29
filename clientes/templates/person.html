@@ -1,25 +1,42 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-<ul>
+{% extends 'base.html' %}
 
-    <a href="{% url 'logout' %}">Sair</a>
-    <br><br>
+{% block title  %} Adminstração {% endblock %}
 
-    {% for person in persons %}
-    <li><a href="{% url 'person_up' person.id %}">{{ person.first_name }}</a>
-        <a href="{% url 'person_del' person.id %}">Deletar</a>
-    </li>
-    {% endfor %}
-</ul>
+{% block main %}
+    <div class="row">
+        <div class="col-sm-6">
+        <h3>Listagem de clientes</h3>
+            <ul class="list-group">
+                {% for person in persons %}
+                <li class="list-group-item">
+                    <a href="{% url 'person_up' person.id %}">{{ person.first_name }}</a>
+                    <a href="{% url 'person_del' person.id %}" class="trash-item">
+                         <span class="glyphicon glyphicon-trash " aria-hidden="true"></span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
 
-<a href="{% url 'person_new' %}">Novo</a>
-</body>
-</html>
+            <a href="{% url 'person_new' %}" class="btn btn-primary">Novo cliente</a>
+        </div>
+
+        <div class="col-sm-4 col-sm-offset-2">
+            {% if user.is_authenticated %}
+                <p>Olá {{ user.username }}
+                    <a href="{% url 'logout' %}" >
+                        <span class="badge badge-dark">Sair</span>
+                    </a>
+                </p>
+
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer%}
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">Desenvolvimento com Django 2.x.</span>
+      </div>
+    </footer>
+{% endblock%}

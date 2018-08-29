@@ -1,19 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-    <h1>Seja bem vindo</h1>
+{% block title  %} Seja bem vindo {% endblock %}
 
-    {% if user.is_authenticated %}
-        <p>Ola {{ user.username }}</p>
-        <a href="{% url 'logout'%}">Sair</a>
-    {% else %}
-        <a href="{% url 'login' %}">Entrar</a>
-    {% endif %}
+{% block main %}
 
-</body>
-</html>
+<div class="row">
+
+    <div class="col-sm-6 col-sm-offset-1">
+        <h2>Seja bem vindo</h2>
+    </div>
+    <div class="col-sm-4 col-sm-offset-1">
+        {% if user.is_authenticated %}
+        <p>Ola {{ user.username }}
+            <a href="{% url 'logout'%}">Sair</a>
+        </p>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-link">Entrar</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer%}
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">Desenvolvimento com Django 2.x.</span>
+      </div>
+    </footer>
+{% endblock%}
